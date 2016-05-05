@@ -1,0 +1,50 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mushin.simplewatchfce">
+
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <!-- [Permissions should be inside "Manifest" element tag, and before "Application" element tag] -->
+    <!-- Allow permission to use a wake lock and provide background functionality. -->
+    <uses-permission android:name="com.google.android.permission.PROVIDE_BACKGROUND" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@android:style/Theme.DeviceDefault">
+
+        <!--
+        * Add a node for the service in the application node with permission to BIND_WALLPAPER,
+        * a few sets of meta-data containing reference images of your watch face for the selection screen (in this example we're just using the launcher icon),
+        * and an intent-filter to let the system know that your service is meant for displaying a watch face.
+        -->
+        <service
+            android:name=".SimpleWatchFace"
+            android:label="SimpleWatchFace"
+            android:allowEmbedded="true"
+            android:permission="android.permission.BIND_WALLPAPER" >
+
+            <!-- Default Activity -->
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/watch_face" />
+            <!-- Watch Face Preview in the Watch Face Selector menu screen. -->
+            <meta-data
+                android:name="com.google.android.wearable.watchface.preview"
+                android:resource="@drawable/simplewatch" />
+            <meta-data
+                android:name="com.google.android.wearable.watchface.preview_circular"
+                android:resource="@drawable/simplewatch" />
+
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
+            </intent-filter>
+        </service>
+
+
+    </application>
+
+</manifest>
